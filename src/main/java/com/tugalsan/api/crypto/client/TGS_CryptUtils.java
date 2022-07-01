@@ -4,6 +4,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Base64;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 import com.tugalsan.api.bytes.client.TGS_ByteArrayUtils;
 import com.tugalsan.api.charset.client.*;
+import com.tugalsan.api.unsafe.client.*;
 
 public class TGS_CryptUtils {
 
@@ -39,23 +40,19 @@ public class TGS_CryptUtils {
     }
 
     public static String encrypt3DES(CharSequence key, CharSequence originalValue) {
-        try {
+        return TGS_UnSafe.compile(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.encrypt(originalValue.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     public static String decrypt3DES(CharSequence key, CharSequence encryptedValue) {
-        try {
+        return TGS_UnSafe.compile(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.decrypt(encryptedValue.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        });
     }
 
     public static String shift(CharSequence cs) {
