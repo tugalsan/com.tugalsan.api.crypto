@@ -9,26 +9,22 @@ import com.tugalsan.api.unsafe.client.*;
 public class TGS_CryptUtils {
 
     public static String encrypt64(CharSequence inputString) {
-        try {
+        return TGS_UnSafe.compile(() -> {
             if (inputString == null || inputString.toString().isEmpty()) {
                 return "";
             }
             return new String(Base64.encode(TGS_ByteArrayUtils.toByteArray(inputString)), TGS_CharacterSets.UTF8());
-        } catch (Exception e) {
-            return "";
-        }
+        }, e -> "");
     }
 
     public static String decrypt64(CharSequence inputBase64) {
-        try {
+        return TGS_UnSafe.compile(() -> {
             if (inputBase64 == null || inputBase64.toString().isEmpty()) {
                 return "";
             }
 //        System.out.println("TGS_CryptUtils.decrypt64(" + inputBase64 + ")");
             return new String(Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64)), TGS_CharacterSets.UTF8());
-        } catch (Exception e) {
-            return "";
-        }
+        }, e -> "");
     }
 
     private static byte[] keyBytes3DES(CharSequence key) {
