@@ -15,15 +15,15 @@
                     <artifactId>junit</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>com.google.gwt</groupId>
+                    <groupId>org.gwtproject</groupId>
                     <artifactId>gwt-user</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>com.google.gwt</groupId>
+                    <groupId>org.gwtproject</groupId>
                     <artifactId>gwt-user</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>com.google.gwt</groupId>
+                    <groupId>org.gwtproject</groupId>
                     <artifactId>gwt-dev</artifactId>
                 </exclusion>
                 <exclusion>
