@@ -13,7 +13,7 @@ public class TGS_CryptUtils {
             if (inputString == null || inputString.toString().isEmpty()) {
                 return "";
             }
-            return new String(Base64.encode(TGS_ByteArrayUtils.toByteArray(inputString)), TGS_CharacterSets.UTF8());
+            return new String(Base64.encode(TGS_ByteArrayUtils.toByteArray(inputString)), TGS_CharSet.UTF8);
         }, e -> "");
     }
 
@@ -23,7 +23,7 @@ public class TGS_CryptUtils {
                 return "";
             }
 //        System.out.println("TGS_CryptUtils.decrypt64(" + inputBase64 + ")");
-            return new String(Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64)), TGS_CharacterSets.UTF8());
+            return new String(Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64)), TGS_CharSet.UTF8);
         }, e -> "");
     }
 
