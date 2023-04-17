@@ -9,7 +9,7 @@ import com.tugalsan.api.unsafe.client.*;
 public class TGS_CryptUtils {
 
     public static String encrypt64(CharSequence inputString) {
-        return TGS_UnSafe.compile(() -> {
+        return TGS_UnSafe.call(() -> {
             if (inputString == null || inputString.toString().isEmpty()) {
                 return "";
             }
@@ -18,7 +18,7 @@ public class TGS_CryptUtils {
     }
 
     public static String decrypt64(CharSequence inputBase64) {
-        return TGS_UnSafe.compile(() -> {
+        return TGS_UnSafe.call(() -> {
             if (inputBase64 == null || inputBase64.toString().isEmpty()) {
                 return "";
             }
@@ -36,7 +36,7 @@ public class TGS_CryptUtils {
     }
 
     public static String encrypt3DES(CharSequence key, CharSequence originalValue) {
-        return TGS_UnSafe.compile(() -> {
+        return TGS_UnSafe.call(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.encrypt(originalValue.toString());
@@ -44,7 +44,7 @@ public class TGS_CryptUtils {
     }
 
     public static String decrypt3DES(CharSequence key, CharSequence encryptedValue) {
-        return TGS_UnSafe.compile(() -> {
+        return TGS_UnSafe.call(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.decrypt(encryptedValue.toString());
