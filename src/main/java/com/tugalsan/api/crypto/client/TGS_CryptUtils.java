@@ -8,12 +8,30 @@ import com.tugalsan.api.unsafe.client.*;
 
 public class TGS_CryptUtils {
 
+    public static String encrypt64(byte[] bytes) {
+        return TGS_UnSafe.call(() -> {
+            if (bytes == null) {
+                return "";
+            }
+            return new String(Base64.encode(bytes), TGS_CharSetUTF8.UTF8);
+        }, e -> "");
+    }
+
     public static String encrypt64(CharSequence inputString) {
         return TGS_UnSafe.call(() -> {
             if (inputString == null || inputString.toString().isEmpty()) {
                 return "";
             }
-            return new String(Base64.encode(TGS_ByteArrayUtils.toByteArray(inputString)), TGS_CharSetUTF8.UTF8);
+            return encrypt64(TGS_ByteArrayUtils.toByteArray(inputString));
+        }, e -> "");
+    }
+
+    public static String decrypt64(byte[] bytes) {
+        return TGS_UnSafe.call(() -> {
+            if (bytes == null) {
+                return "";
+            }
+            return new String(Base64.decode(bytes), TGS_CharSetUTF8.UTF8);
         }, e -> "");
     }
 
@@ -22,8 +40,7 @@ public class TGS_CryptUtils {
             if (inputBase64 == null || inputBase64.toString().isEmpty()) {
                 return "";
             }
-//        System.out.println("TGS_CryptUtils.decrypt64(" + inputBase64 + ")");
-            return new String(Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64)), TGS_CharSetUTF8.UTF8);
+            return decrypt64(TGS_ByteArrayUtils.toByteArray(inputBase64));
         }, e -> "");
     }
 
