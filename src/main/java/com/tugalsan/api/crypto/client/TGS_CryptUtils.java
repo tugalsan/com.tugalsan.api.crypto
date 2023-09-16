@@ -26,6 +26,15 @@ public class TGS_CryptUtils {
         }, e -> "");
     }
 
+    public static byte[] decrypt64_toBytes(CharSequence inputBase64) {
+        return TGS_UnSafe.call(() -> {
+            if (inputBase64 == null || inputBase64.toString().isEmpty()) {
+                return null;
+            }
+            return Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64));
+        }, e -> null);
+    }
+
     public static String decrypt64(byte[] bytes) {
         return TGS_UnSafe.call(() -> {
             if (bytes == null) {
