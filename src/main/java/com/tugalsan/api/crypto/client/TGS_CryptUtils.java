@@ -1,56 +1,56 @@
 package com.tugalsan.api.crypto.client;
 
+import com.googlecode.gwt.crypto.bouncycastle.DataLengthException;
+import com.googlecode.gwt.crypto.bouncycastle.InvalidCipherTextException;
 import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Base64;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 import com.tugalsan.api.bytes.client.TGS_ByteArrayUtils;
 import com.tugalsan.api.charset.client.*;
-import com.tugalsan.api.unsafe.client.*;
+import java.io.UnsupportedEncodingException;
 
 public class TGS_CryptUtils {
 
-    public static String encrypt64(byte[] bytes) {
-        return TGS_UnSafe.call(() -> {
-            if (bytes == null) {
-                return "";
-            }
+    public static String encrypt64_orEmpty(byte[] bytes) {
+        if (bytes == null) {
+            return "";
+        }
+        try {
             return new String(Base64.encode(bytes), TGS_CharSetUTF8.UTF8);
-        }, e -> "");
+        } catch (UnsupportedEncodingException ex) {
+            return "";
+        }
     }
 
-    public static String encrypt64(CharSequence inputString) {
-        return TGS_UnSafe.call(() -> {
-            if (inputString == null || inputString.toString().isEmpty()) {
-                return "";
-            }
-            return encrypt64(TGS_ByteArrayUtils.toByteArray(inputString));
-        }, e -> "");
+    public static String encrypt64_orEmpty(CharSequence inputString) {
+        if (inputString == null || inputString.toString().isEmpty()) {
+            return "";
+        }
+        return encrypt64_orEmpty(TGS_ByteArrayUtils.toByteArray(inputString));
     }
 
     public static byte[] decrypt64_toBytes(CharSequence inputBase64) {
-        return TGS_UnSafe.call(() -> {
-            if (inputBase64 == null || inputBase64.toString().isEmpty()) {
-                return null;
-            }
-            return Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64));
-        }, e -> null);
+        if (inputBase64 == null || inputBase64.toString().isEmpty()) {
+            return null;
+        }
+        return Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64));
     }
 
-    public static String decrypt64(byte[] bytes) {
-        return TGS_UnSafe.call(() -> {
-            if (bytes == null) {
-                return "";
-            }
+    public static String decrypt64_orEmpty(byte[] bytes) {
+        if (bytes == null) {
+            return "";
+        }
+        try {
             return new String(Base64.decode(bytes), TGS_CharSetUTF8.UTF8);
-        }, e -> "");
+        } catch (UnsupportedEncodingException ex) {
+            return "";
+        }
     }
 
-    public static String decrypt64(CharSequence inputBase64) {
-        return TGS_UnSafe.call(() -> {
-            if (inputBase64 == null || inputBase64.toString().isEmpty()) {
-                return "";
-            }
-            return decrypt64(TGS_ByteArrayUtils.toByteArray(inputBase64));
-        }, e -> "");
+    public static String decrypt64_orEmpty(CharSequence inputBase64) {
+        if (inputBase64 == null || inputBase64.toString().isEmpty()) {
+            return "";
+        }
+        return decrypt64_orEmpty(TGS_ByteArrayUtils.toByteArray(inputBase64));
     }
 
     private static byte[] keyBytes3DES(CharSequence key) {
@@ -61,20 +61,24 @@ public class TGS_CryptUtils {
         return TGS_ByteArrayUtils.toByteArray(keyString);
     }
 
-    public static String encrypt3DES(CharSequence key, CharSequence originalValue) {
-        return TGS_UnSafe.call(() -> {
-            var cipher = new TripleDesCipher();
-            cipher.setKey(keyBytes3DES(key));
+    public static String encrypt3DES_orEmpty(CharSequence key, CharSequence originalValue) {
+        var cipher = new TripleDesCipher();
+        cipher.setKey(keyBytes3DES(key));
+        try {
             return cipher.encrypt(originalValue.toString());
-        });
+        } catch (DataLengthException | IllegalStateException | InvalidCipherTextException ex) {
+            return "";
+        }
     }
 
-    public static String decrypt3DES(CharSequence key, CharSequence encryptedValue) {
-        return TGS_UnSafe.call(() -> {
-            var cipher = new TripleDesCipher();
-            cipher.setKey(keyBytes3DES(key));
+    public static String decrypt3DES_orEmpty(CharSequence key, CharSequence encryptedValue) {
+        var cipher = new TripleDesCipher();
+        cipher.setKey(keyBytes3DES(key));
+        try {
             return cipher.decrypt(encryptedValue.toString());
-        });
+        } catch (DataLengthException | IllegalStateException | InvalidCipherTextException ex) {
+            return "";
+        }
     }
 
     public static String shift(CharSequence cs) {
