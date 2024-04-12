@@ -6,26 +6,27 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Base64;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 import com.tugalsan.api.bytes.client.TGS_ByteArrayUtils;
 import com.tugalsan.api.charset.client.*;
+import com.tugalsan.api.union.client.TGS_UnionExcuse;
 import java.io.UnsupportedEncodingException;
 
 public class TGS_CryptUtils {
 
-    public static String encrypt64_orEmpty(byte[] bytes) {
+    public static TGS_UnionExcuse<String> encrypt64(byte[] bytes) {
         if (bytes == null) {
-            return "";
+            return TGS_UnionExcuse.of("");
         }
         try {
-            return new String(Base64.encode(bytes), TGS_CharSetUTF8.UTF8);
+            return TGS_UnionExcuse.of(new String(Base64.encode(bytes), TGS_CharSetUTF8.UTF8));
         } catch (UnsupportedEncodingException ex) {
-            return "";
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
-    public static String encrypt64_orEmpty(CharSequence inputString) {
+    public static TGS_UnionExcuse<String> encrypt64(CharSequence inputString) {
         if (inputString == null || inputString.toString().isEmpty()) {
-            return "";
+            return TGS_UnionExcuse.of("");
         }
-        return encrypt64_orEmpty(TGS_ByteArrayUtils.toByteArray(inputString));
+        return encrypt64(TGS_ByteArrayUtils.toByteArray(inputString));
     }
 
     public static byte[] decrypt64_toBytes(CharSequence inputBase64) {
@@ -35,22 +36,22 @@ public class TGS_CryptUtils {
         return Base64.decode(TGS_ByteArrayUtils.toByteArray(inputBase64));
     }
 
-    public static String decrypt64_orEmpty(byte[] bytes) {
+    public static TGS_UnionExcuse<String> decrypt64(byte[] bytes) {
         if (bytes == null) {
-            return "";
+            return TGS_UnionExcuse.of("");
         }
         try {
-            return new String(Base64.decode(bytes), TGS_CharSetUTF8.UTF8);
+            return TGS_UnionExcuse.of(new String(Base64.decode(bytes), TGS_CharSetUTF8.UTF8));
         } catch (UnsupportedEncodingException ex) {
-            return "";
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
-    public static String decrypt64_orEmpty(CharSequence inputBase64) {
+    public static TGS_UnionExcuse<String> decrypt64(CharSequence inputBase64) {
         if (inputBase64 == null || inputBase64.toString().isEmpty()) {
-            return "";
+            return TGS_UnionExcuse.of("");
         }
-        return decrypt64_orEmpty(TGS_ByteArrayUtils.toByteArray(inputBase64));
+        return decrypt64(TGS_ByteArrayUtils.toByteArray(inputBase64));
     }
 
     private static byte[] keyBytes3DES(CharSequence key) {
@@ -61,23 +62,23 @@ public class TGS_CryptUtils {
         return TGS_ByteArrayUtils.toByteArray(keyString);
     }
 
-    public static String encrypt3DES_orEmpty(CharSequence key, CharSequence originalValue) {
+    public static TGS_UnionExcuse<String> encrypt3DES(CharSequence key, CharSequence originalValue) {
         var cipher = new TripleDesCipher();
         cipher.setKey(keyBytes3DES(key));
         try {
-            return cipher.encrypt(originalValue.toString());
+            return TGS_UnionExcuse.of(cipher.encrypt(originalValue.toString()));
         } catch (DataLengthException | IllegalStateException | InvalidCipherTextException ex) {
-            return "";
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
-    public static String decrypt3DES_orEmpty(CharSequence key, CharSequence encryptedValue) {
+    public static TGS_UnionExcuse<String> decrypt3DES(CharSequence key, CharSequence encryptedValue) {
         var cipher = new TripleDesCipher();
         cipher.setKey(keyBytes3DES(key));
         try {
-            return cipher.decrypt(encryptedValue.toString());
+            return TGS_UnionExcuse.of(cipher.decrypt(encryptedValue.toString()));
         } catch (DataLengthException | IllegalStateException | InvalidCipherTextException ex) {
-            return "";
+            return TGS_UnionExcuse.ofExcuse(ex);
         }
     }
 
