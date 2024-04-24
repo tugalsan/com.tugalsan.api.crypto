@@ -13,7 +13,7 @@ public class TGS_CryptUtils {
             if (bytes == null) {
                 return "";
             }
-            return new String(Base64.encode(bytes), TGS_CharSetUTF8.UTF8);
+            return new String(Base64.encode(bytes), TGS_CharSet.cmn().UTF8);
         }, e -> "");
     }
 
@@ -40,7 +40,7 @@ public class TGS_CryptUtils {
             if (bytes == null) {
                 return "";
             }
-            return new String(Base64.decode(bytes), TGS_CharSetUTF8.UTF8);
+            return new String(Base64.decode(bytes), TGS_CharSet.cmn().UTF8);
         }, e -> "");
     }
 
