@@ -19,8 +19,12 @@
                     <artifactId>gwt-user</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>com.google.gwt</groupId>
+                    <groupId>org.gwtproject</groupId>
                     <artifactId>gwt-dev</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-io</groupId>
+                    <artifactId>commons-io</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>javax.validation</groupId>
@@ -28,7 +32,12 @@
                 </exclusion>
             </exclusions>
             <version>2.3.0</version> 
-        </dependency>  
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.18.0</version>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>com.tugalsan.api.bytes</artifactId>
@@ -84,7 +93,7 @@
                 <version>3.13.0</version>
                 <configuration>
                     <release>23</release>
-                     <!--  <enablePreview>true</enablePreview>
+                    <!--  <enablePreview>true</enablePreview>
                     <compilerArgs>
                        <arg>- -add-modules</arg>
                         <arg>jdk.incubator.vector</arg>
