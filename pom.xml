@@ -50,7 +50,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>com.tugalsan.api.unsafe</artifactId>
+            <artifactId>com.tugalsan.api.function</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
