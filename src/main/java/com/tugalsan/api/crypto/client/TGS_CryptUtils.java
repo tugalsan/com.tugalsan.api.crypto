@@ -8,6 +8,10 @@ import com.tugalsan.api.function.client.maythrow.checkedexceptions.TGS_FuncMTCEU
 
 
 public class TGS_CryptUtils {
+    
+    private TGS_CryptUtils(){
+        
+    }
 
     public static String encrypt64(byte[] bytes) {
         return TGS_FuncMTCEUtils.call(() -> {
