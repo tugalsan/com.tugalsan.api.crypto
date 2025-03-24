@@ -4,7 +4,7 @@ import com.googlecode.gwt.crypto.bouncycastle.util.encoders.Base64;
 import com.googlecode.gwt.crypto.client.TripleDesCipher;
 import com.tugalsan.api.bytes.client.TGS_ByteArrayUtils;
 import com.tugalsan.api.charset.client.*;
-import com.tugalsan.api.function.client.maythrow.checkedexceptions.TGS_FuncMTCEUtils;
+import com.tugalsan.api.function.client.maythrowexceptions.checked.TGS_FuncMTCUtils;
 
 
 public class TGS_CryptUtils {
@@ -14,7 +14,7 @@ public class TGS_CryptUtils {
     }
 
     public static String encrypt64(byte[] bytes) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             if (bytes == null) {
                 return "";
             }
@@ -23,7 +23,7 @@ public class TGS_CryptUtils {
     }
 
     public static String encrypt64(CharSequence inputString) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             if (inputString == null || inputString.toString().isEmpty()) {
                 return "";
             }
@@ -32,7 +32,7 @@ public class TGS_CryptUtils {
     }
 
     public static byte[] decrypt64_toBytes(CharSequence inputBase64) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             if (inputBase64 == null || inputBase64.toString().isEmpty()) {
                 return null;
             }
@@ -41,7 +41,7 @@ public class TGS_CryptUtils {
     }
 
     public static String decrypt64(byte[] bytes) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             if (bytes == null) {
                 return "";
             }
@@ -50,7 +50,7 @@ public class TGS_CryptUtils {
     }
 
     public static String decrypt64(CharSequence inputBase64) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             if (inputBase64 == null || inputBase64.toString().isEmpty()) {
                 return "";
             }
@@ -67,7 +67,7 @@ public class TGS_CryptUtils {
     }
 
     public static String encrypt3DES(CharSequence key, CharSequence originalValue) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.encrypt(originalValue.toString());
@@ -75,7 +75,7 @@ public class TGS_CryptUtils {
     }
 
     public static String decrypt3DES(CharSequence key, CharSequence encryptedValue) {
-        return TGS_FuncMTCEUtils.call(() -> {
+        return TGS_FuncMTCUtils.call(() -> {
             var cipher = new TripleDesCipher();
             cipher.setKey(keyBytes3DES(key));
             return cipher.decrypt(encryptedValue.toString());
